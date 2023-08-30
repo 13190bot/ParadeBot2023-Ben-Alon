@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 
 public class BaseOpMode extends CommandOpMode {
 
-    protected MotorEx fl1, fr1, fl2, fr2;
+    protected MotorEx fl, fr;
     protected ParadeBotSubSystem paradeSystem;
     protected GamepadEx pad1;
 
@@ -17,12 +17,11 @@ public class BaseOpMode extends CommandOpMode {
     public void initialize() {
 
         // TODO: Get real Config Names
-        fl1 = new MotorEx(hardwareMap, "frontLeft1");
-        fr1 = new MotorEx(hardwareMap, "frontRight1");
-        fl2 = new MotorEx(hardwareMap, "frontLeft2");
-        fr2 = new MotorEx(hardwareMap, "frontRight2");
+        fl = new MotorEx(hardwareMap, "frontLeft");
+        fr = new MotorEx(hardwareMap, "frontRight");
 
-        paradeSystem = new ParadeBotSubSystem(fl1, fr1,fl2,fr2);
+
+        paradeSystem = new ParadeBotSubSystem(fl, fr);
 
         pad1 = new GamepadEx(gamepad1);
     }
