@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.commands.CruiseControlCmd;
 import org.firstinspires.ftc.teamcode.commands.DriveNormalCmd;
 import org.firstinspires.ftc.teamcode.commands.DriveSlowCmd;
+import org.firstinspires.ftc.teamcode.commands.ManualArmCommand;
 
 @TeleOp(name = "Parade Bot Teleop")
 public class ParadeBotTeleOp extends BaseOpMode {
@@ -16,10 +17,18 @@ public class ParadeBotTeleOp extends BaseOpMode {
         CruiseControlCmd cruiseCntrl = new CruiseControlCmd(paradeSystem, pad1::getLeftY, pad1::getRightX);
         DriveNormalCmd driveNormal = new DriveNormalCmd(paradeSystem, pad1::getLeftY, pad1::getRightX);
         DriveSlowCmd driveSlow = new DriveSlowCmd(paradeSystem, pad1::getLeftY, pad1::getRightX);
+        ManualArmCommand manualArmCommand = new ManualArmCommand(
+                () -> gpT1(GamepadKeys.Trigger.RIGHT_TRIGGER),
+                () -> gpT1(GamepadKeys.Trigger.LEFT_TRIGGER),
+                armSubSystem,
+                telemetry,
+                gpB1(GamepadKeys.Button.Y).get()
+        );
 
         //Toggled Commands
-        gp1(GamepadKeys.Button.X).toggleWhenPressed(driveSlow);
-        gp1(GamepadKeys.Button.B).toggleWhenPressed(cruiseCntrl);
+        gpB1(GamepadKeys.Button.X).toggleWhenPressed(driveSlow);
+        gpB1(GamepadKeys.Button.B).toggleWhenPressed(cruiseCntrl);
+
 
         register(paradeSystem);
         paradeSystem.setDefaultCommand(driveNormal);
