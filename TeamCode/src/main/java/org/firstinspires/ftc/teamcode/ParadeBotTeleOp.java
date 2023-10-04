@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.commands.CruiseControlCmd;
-import org.firstinspires.ftc.teamcode.commands.DriveNormalCmd;
-import org.firstinspires.ftc.teamcode.commands.DriveSlowCmd;
-import org.firstinspires.ftc.teamcode.commands.ManualArmCommand;
+import org.firstinspires.ftc.teamcode.commands.*;
 
 @TeleOp(name = "Parade Bot Teleop")
 public class ParadeBotTeleOp extends BaseOpMode {
@@ -24,13 +22,20 @@ public class ParadeBotTeleOp extends BaseOpMode {
                 telemetry,
                 gpB1(GamepadKeys.Button.Y).get()
         );
+        AutoArmCommand autoArmCommand = new AutoArmCommand(armSubSystem,telemetry);
 
         //Toggled Commands
         gpB1(GamepadKeys.Button.X).toggleWhenPressed(driveSlow);
         gpB1(GamepadKeys.Button.B).toggleWhenPressed(cruiseCntrl);
+        gpB1(GamepadKeys.Button.A).toggleWhenPressed(autoArmCommand);
 
+        gpB1(GamepadKeys.Button.BACK).whenPressed(new InstantCommand(() -> {
+            armSubSystem.resetArmEncoder();
+        }));
 
+        register(armSubSystem);
         register(paradeSystem);
         paradeSystem.setDefaultCommand(driveNormal);
+        armSubSystem.setDefaultCommand(manualArmCommand);
     }
 }

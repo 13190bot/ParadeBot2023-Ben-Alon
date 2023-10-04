@@ -1,46 +1,62 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ProfiledPIDController;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.arcrobotics.ftclib.trajectory.TrapezoidProfile;
-
+@Config
 public class ArmSubSystem extends SubsystemBase {
     protected MotorEx armMotor;
     protected int currentTarget;
+    protected double PIDOutput = 0.0;
 
     public ArmSubSystem(MotorEx armMotor) {
         this.armMotor = armMotor;
-        controller.setTolerance(3);
+        controller.setTolerance(20);
     }
     public enum POSITION {
         MID(0),
-        LEFT(0),
-        RIGHT(0);
+        LEFT(-1047),
+        RIGHT(829);
         public final int pos;
         POSITION(int pos) {
             this.pos = pos;
         }
     }
-    public static double kP = 0.00;
+
+    protected double maxSpeed = 0.3;
+    public static double kP = 1;
+    public static double kI = 0.3;
+    public static double kD = 0.0;
     public static double kG = 0.0;
-    public POSITION currentGoal = POSITION.MID;
-      protected ProfiledPIDController controller = new ProfiledPIDController(kP, 0, 0,
-            new TrapezoidProfile.Constraints(0, 0));
+    public POSITION currentGoal = null;
+      protected PIDController controller = new PIDController(kP, kI, kD);
 
 
     public void setTarget(POSITION target) {
-        currentGoal = target;
+        this.currentGoal = target;
         currentTarget = target.pos;
-        controller.setGoal(target.pos);
     }
+
     public void setMid() {setTarget(POSITION.MID);}
     public void setLeft() {setTarget(POSITION.LEFT);}
     public void setRight() {setTarget(POSITION.RIGHT);}
-    public boolean atTarget() {return controller.atGoal();}
-    @Override
-    public void periodic() {
-        armMotor.set(controller.calculate(armMotor.getCurrentPosition()+kG));
+    public boolean atTarget() {return controller.atSetPoint();}
+    public void armToOuput() {
+        PIDOutput = (controller.calculate(armMotor.getCurrentPosition()+kG,currentTarget));
+
+        if (PIDOutput > maxSpeed) {
+            PIDOutput = maxSpeed;
+        } else if (PIDOutput < -maxSpeed) {
+            PIDOutput = -maxSpeed;
+        }
+
+        armMotor.set(PIDOutput);
+
+    }
+
+    public double getCurrentPIDOutput(){
+        return PIDOutput;
     }
 
     public void moveArm(double power) {
