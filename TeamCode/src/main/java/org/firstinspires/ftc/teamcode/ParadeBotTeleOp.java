@@ -25,13 +25,16 @@ public class ParadeBotTeleOp extends BaseOpMode {
         AutoArmCommand autoArmCommand = new AutoArmCommand(armSubSystem,telemetry);
 
         //Toggled Commands
-        gpB1(GamepadKeys.Button.X).toggleWhenPressed(driveSlow);
+        gpB1(GamepadKeys.Button.DPAD_DOWN).toggleWhenPressed(driveSlow);
         gpB1(GamepadKeys.Button.B).toggleWhenPressed(cruiseCntrl);
-        gpB1(GamepadKeys.Button.A).toggleWhenPressed(autoArmCommand);
+        gpB1(GamepadKeys.Button.DPAD_UP).toggleWhenPressed(autoArmCommand);
 
         gpB1(GamepadKeys.Button.BACK).whenPressed(new InstantCommand(() -> {
             armSubSystem.resetArmEncoder();
         }));
+
+
+
 
         register(armSubSystem);
         register(paradeSystem);

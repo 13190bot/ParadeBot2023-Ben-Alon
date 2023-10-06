@@ -31,6 +31,12 @@ public class BaseOpMode extends CommandOpMode {
         pad1 = new GamepadEx(gamepad1);
     }
 
+    @Override
+    public void run(){
+        telemetry.addData("Arm Encoder Pos", armSubSystem.getArmPosition());
+        telemetry.update();
+    }
+
     protected GamepadButton gpB1(GamepadKeys.Button button) {
         return pad1.getGamepadButton(button);
     }

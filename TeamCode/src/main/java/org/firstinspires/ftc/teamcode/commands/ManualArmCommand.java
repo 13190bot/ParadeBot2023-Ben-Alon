@@ -10,7 +10,6 @@ import java.util.function.DoubleSupplier;
 public class ManualArmCommand extends CommandBase {
     protected DoubleSupplier powerForward, powerBack;
     protected ArmSubSystem armSubSystem;
-    protected GamepadEx gp1;
     protected Telemetry telemetry;
 
     public ManualArmCommand(DoubleSupplier powerForward, DoubleSupplier powerBack, ArmSubSystem armSubSystem, Telemetry telemetry, Boolean isYPressed) {
@@ -24,8 +23,7 @@ public class ManualArmCommand extends CommandBase {
     @Override
     public void execute() {
         armSubSystem.moveArm(powerForward.getAsDouble()+(-powerBack.getAsDouble()));
-        telemetry.addData("Arm Encoder Pos", armSubSystem.getArmPosition());
-        telemetry.update();
+
     }
     }
 

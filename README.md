@@ -1,2 +1,3 @@
-# Best Parade Bot Code by Alon and Ben
+# Parade Bot Code by Ben
+Contributors: Ben, Alon, Py  
 > Wilcox Robotics
