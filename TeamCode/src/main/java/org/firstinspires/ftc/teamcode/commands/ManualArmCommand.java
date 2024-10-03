@@ -23,7 +23,8 @@ public class ManualArmCommand extends CommandBase {
     @Override
     public void execute() {
         armSubSystem.moveArm(powerForward.getAsDouble()+(-powerBack.getAsDouble()));
-
+        telemetry.addData("Arm Encoder Pos", armSubSystem.getArmPosition());
+        telemetry.update();
     }
     }
 

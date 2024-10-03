@@ -17,15 +17,15 @@ public class BaseOpMode extends CommandOpMode {
     @Override
     public void initialize() {
 
-        fl1 = new MotorEx(hardwareMap, "backLeft1");
-        fr1 = new MotorEx(hardwareMap, "backRight1");
-        fl2 = new MotorEx(hardwareMap, "backLeft2");
-        fr2 = new MotorEx(hardwareMap, "backRight2");
+        fl1 = new MotorEx(hardwareMap, "fl");
+        fr1 = new MotorEx(hardwareMap, "fr");
+        fl2 = new MotorEx(hardwareMap, "bl");
+        fr2 = new MotorEx(hardwareMap, "br");
 
-        armMotor = new MotorEx(hardwareMap, "armMotor");
+        //armMotor = new MotorEx(hardwareMap, "armMotor");
 
         paradeSystem = new ParadeBotSubSystem(fl1, fr1,fl2,fr2);
-        armSubSystem = new ArmSubSystem(armMotor);
+       //armSubSystem = new ArmSubSystem(armMotor);
 
 
         pad1 = new GamepadEx(gamepad1);
@@ -33,7 +33,7 @@ public class BaseOpMode extends CommandOpMode {
 
     @Override
     public void run(){
-        telemetry.addData("Arm Encoder Pos", armSubSystem.getArmPosition());
+        //telemetry.addData("Arm Encoder Pos", armSubSystem.getArmPosition());
         telemetry.update();
     }
 

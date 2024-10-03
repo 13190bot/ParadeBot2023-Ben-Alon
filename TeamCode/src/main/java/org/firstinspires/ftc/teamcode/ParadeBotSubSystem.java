@@ -13,7 +13,7 @@ public class ParadeBotSubSystem extends SubsystemBase {
     protected DifferentialDrive diffDrive;
     MotorEx fL1, fR1, fL2,fR2;
 
-    int slowSpeed = 4;
+    int slowSpeed = 2;
 
     public ParadeBotSubSystem(MotorEx fl1, MotorEx fr1, MotorEx fl2, MotorEx fr2) {
         this.fL1 = fl1;
@@ -30,11 +30,11 @@ public class ParadeBotSubSystem extends SubsystemBase {
     }
 
     public void driveNormal(Double forward, Double turn){
-        diffDrive.arcadeDrive(forward,turn);
+        diffDrive.arcadeDrive(forward,turn/2);
     }
 
     public void driveSlow(Double forward, Double turn){
-        diffDrive.arcadeDrive(forward/slowSpeed,turn/slowSpeed);
+        diffDrive.arcadeDrive(forward/slowSpeed,turn/3);
     }
 
 
